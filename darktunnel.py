@@ -9,11 +9,43 @@ tr.screen.bgcolor("black")
 
 
 # User Input
-inIterationMax = tr.screen.numinput("Line Count", "Enter desired number of lines to be drawn (more will take longer to complete)", 50, 1, 30000)
-inLineLength = tr.screen.numinput("Length Input", "Enter desired line length", 50, 1, 1000)
+inIterationMax = tr.screen.numinput("Line Count", "Enter desired number of lines to be drawn (more will take longer to complete)", 50, 10, 30000)
+inLineLength = tr.screen.numinput("Length Input", "Enter desired line length", 500, 100, 1000)
 inLineColor = tr.screen.textinput("Line Color", "Enter desired line color")
-inOctogonColor = tr.screen.textinput("Octogon Color", "Enter desired octogon color")
-inSquareColor = tr.screen.textinput("Square Color", "Enter desired square color")
+inShapeSelection1 = tr.screen.textinput("Shape Selection 1", "Enter first desired shappe | Options: Triangle, Octogon, Square, Circle")
+inShapeSelection2 = tr.screen.textinput("Shape Selection 2", "Enter second shape desired shappe | Options: Triangle, Octogon, Square, Circle")
+inShapeColor1 = tr.screen.textinput("Shape Color 1", "Enter first desired shape color")
+inShapeColor2 = tr.screen.textinput("Shape Color 2", "Enter second desired shape color")
+
+
+def shapePicker(x, y, z):
+    if x == "Triangle" or "triangle":
+        tr.setpos(-150, -150)
+        tr.pencolor(y)
+        tr.pendown()
+        tr.seth(0)
+        while z != 3:
+            tr.forward(300)
+            tr.left(120)
+            z += 1
+    elif x == "Octogon" or "octogon":
+        tr.setpos(-150, ((300*(math.sqrt(2)))*1.5)/2)
+        tr.pencolor(y)
+        tr.pendown()
+        tr.seth(0)
+        while z != 8:
+            tr.forward(300)
+            tr.right(45)
+            z += 1
+    elif x == "Square" or "square":
+        tr.setpos(-150, -150)
+        tr.pencolor(y)
+        tr.pendown()
+        tr.seth(0)
+        while z != 4:
+            tr.forward(300)
+            tr.left(90)
+            z += 1
 
 # Counters
 iteration = 0
@@ -38,37 +70,25 @@ while iteration != inIterationMax:
     
     iteration += 1
 
-# Setup for Octogon Shape After Lines are finished being drawn (can take up to 10 minutes with over 10000 lines)
+# Setup for First Shape After Lines are finished being drawn (can take up to 10 minutes with over 10000 lines)
 tr.speed("normal")
 tr.penup()
 tr.pensize(5)
-tr.setpos(-150, ((300*(math.sqrt(2)))*1.5)/2)
-tr.pencolor(inOctogonColor)
-tr.pendown()
-tr.seth(0)
 
-# Draws Octogon Shape
-while x1 !=8:
-    tr.forward(300)
-    tr.right(45)
-    x1 += 1
 
-# Setup for Square Shape
+
+# Draws First Shape
+shapePicker(inShapeSelection1, inShapeColor1, x1)
+
+# Setup for Second Shape
 tr.penup()
-tr.setpos(-300, 300)
-tr.pencolor(inSquareColor)
-tr.pendown()
 
-
-# Draws Square Shape
-while x2 !=4:
-    tr.forward(600)
-    tr.right(90)
-    x2 += 1
+# Draws Second Shape
+shapePicker(inShapeSelection2, inShapeColor2, x2)
+# while x2 !=4:
+#     tr.forward(600)
+#     tr.right(90)
+#     x2 += 1
 
 wn = trtl.Screen()
 wn.mainloop()
-
-
-
-
