@@ -12,15 +12,15 @@ tr.screen.bgcolor("black")
 inIterationMax = tr.screen.numinput("Line Count", "Enter desired number of lines to be drawn (more will take longer to complete)", 50, 10, 30000)
 inLineLength = tr.screen.numinput("Length Input", "Enter desired line length", 500, 100, 1000)
 inLineColor = tr.screen.textinput("Line Color", "Enter desired line color")
-inShapeSelection1 = tr.screen.textinput("Shape Selection 1", "Enter first desired shappe | Options: Triangle, Octogon, Square, Circle")
-inShapeSelection2 = tr.screen.textinput("Shape Selection 2", "Enter second shape desired shappe | Options: Triangle, Octogon, Square, Circle")
+inShapeSelection1 = int(tr.screen.textinput("Shape Selection 1", "Enter first desired shappe | Options: 1. Triangle, 2. Octogon, 3. Square, 4. Circle"))
+inShapeSelection2 = int(tr.screen.textinput("Shape Selection 2", "Enter second shape desired shappe | Options:1. Triangle, 2. Octogon, 3. Square, 4. Circle"))
 inShapeColor1 = tr.screen.textinput("Shape Color 1", "Enter first desired shape color")
 inShapeColor2 = tr.screen.textinput("Shape Color 2", "Enter second desired shape color")
 
 
 def shapePicker(x, y, z):
-    if x == "Triangle" or "triangle":
-        tr.setpos(-150, -150)
+    if x == 1:
+        tr.setpos(-150, -125)
         tr.pencolor(y)
         tr.pendown()
         tr.seth(0)
@@ -28,7 +28,7 @@ def shapePicker(x, y, z):
             tr.forward(300)
             tr.left(120)
             z += 1
-    elif x == "Octogon" or "octogon":
+    elif x == 2:
         tr.setpos(-150, ((300*(math.sqrt(2)))*1.5)/2)
         tr.pencolor(y)
         tr.pendown()
@@ -37,13 +37,13 @@ def shapePicker(x, y, z):
             tr.forward(300)
             tr.right(45)
             z += 1
-    elif x == "Square" or "square":
-        tr.setpos(-150, -150)
+    elif x == 3:
+        tr.setpos(-300, -300)
         tr.pencolor(y)
         tr.pendown()
         tr.seth(0)
         while z != 4:
-            tr.forward(300)
+            tr.forward(600)
             tr.left(90)
             z += 1
 
