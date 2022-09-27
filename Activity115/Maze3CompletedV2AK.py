@@ -43,15 +43,16 @@ wn.bgpic("maze3.png") # other file names should be maze2.png, maze3.png
 # move robot forward with move()
 # turn robot left with turn_left()
 
-for l in range(3):
-  turn_left()
-for step in range(8):
-  move()
-  for i in range(2):
-    turn_left()
-  if step == 4:
+for step in range(2):
+  if step == 1:
     robot.pencolor("#00a926")
-
+  for i in range(2):
+    move()
+    for l in range(3): # turn right
+      turn_left()
+    move()
+    turn_left()
+  
 #---- end robot movement 
 
 wn.mainloop()
