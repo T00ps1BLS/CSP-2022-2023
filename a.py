@@ -1,9 +1,9 @@
 import turtle as trtl
 import random
-from colorsys import hsv_to_rgb
 
 tr = trtl.Turtle()
 tr.speed('fastest')
+tr.pensize(2)
 randpointx1 = random.randint(-300, 300)
 randpointy1 = random.randint(-300, 300)
 
@@ -21,26 +21,38 @@ tr.goto(randpointx2, randpointy2)
 tr.goto(randpointx1, randpointy2)
 tr.goto(randpointx1, randpointy1)
 
-angle = 255
 screen = trtl.Screen()
-screen.colormode(255)
 reset()
+xposStart = tr.xcor()
+yposStart = tr.ycor()
+colors = ["red", "blue", "green", "orange", "purple", "gold"]
+
+if randpointx1 < randpointx2:
+    xlower = randpointx1
+    xhigher = randpointx2
+else:
+    xlower = randpointx2
+    xhigher = randpointx1
+if randpointy1 < randpointy2:
+    ylower = randpointy1
+    yhigher = randpointy2
+else:
+    ylower = randpointy2
+    yhigher = randpointy1
+
 while True:
-    tr.seth(random.randint(1, 360))
-    tr.forward(random.randint(1, 10))
-    xpos = tr.xcor()
-    ypos = tr.ycor()
-    if angle != 1:
-        angle -= 1
-        tr.pencolor(angle, 1, 1)
-    if randpointy1 and randpointy2 <= 0:
-        if xpos >= randpointx1 or xpos <= randpointx2:
-            reset()
-        if ypos >= randpointy1 or ypos <= randpointy2:
-            reset()
+    for i in colors:
+        xpos = tr.xcor()
+        ypos = tr.ycor()
+        if xpos >= xhigher or xpos <= xlower or ypos >= yhigher or ypos <= ylower:
+            tr.seth(tr.towards(randpointx1 + ((randpointx2 - randpointx1) / 2), randpointy1 + ((randpointy2 - randpointy1) / 2)))
+            tr.forward(6)
+        tr.seth(random.randint(1, 360))
+        tr.forward(random.randint(1, 10))
+        colors.append(i)
+        tr.pencolor(i)
+        
 
-
-
-
+        
 
 screen.mainloop()
