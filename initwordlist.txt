@@ -1,0 +1,14 @@
+apple
+orange
+fruit
+grape
+
+shelf
+doors
+rooms
+stair
+
+flood
+fires
+quake
+storm
