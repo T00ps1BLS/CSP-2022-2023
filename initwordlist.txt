@@ -2,12 +2,12 @@ apple
 orange
 fruit
 grape
-
+1
 shelf
 doors
 rooms
 stair
-
+2
 flood
 fires
 quake
