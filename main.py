@@ -10,9 +10,21 @@ employeeimg = 'EMPLOYEE.gif'
 employeeimg1 = 'EMPLOYEE1.gif'
 spchbbl = 'speechbubble.gif'
 menu_items1= ['Taco', 'Taco', 'taco', 'tacos', 'Tacos', 'Taco with Cheese',]
+menu_prices1= [0.25, 0.50, 0.50, 1.00, 0.25, 1.25]
 bgstate = 0
 select = False
-
+mnit0 = fred.Turtle()
+mnit0.ht()
+mnit1 = fred.Turtle()
+mnit1.ht()
+mnit2 = fred.Turtle()
+mnit2.ht()
+mnit3 = fred.Turtle()
+mnit3.ht()
+mnit4 = fred.Turtle()
+mnit4.ht()
+mnit5 = fred.Turtle()
+mnit5.ht()
 
 wn = fred.Screen()
 wn.setup(width=screen_w, height=screen_h)
@@ -56,13 +68,25 @@ def click(x, y):
         refresh_bg()
 
 def menu_turtles():
-    global menu_items1
+    global menu_items1, menu_prices1
     for i in menu_items1:
         random_taco_num = random.randint(0, 5)
         index = 0
+        turtleitem = ""
+        turtleprice = ""
         while index != random_taco_num:
+            turtleitem += menu_items1[index]
+            turtleprice += menu_prices1[index]
             index += 1
+        mnit0.write('''
+        {}
+        {}
+        '''.format(turtleitem, turtleprice), align='center', font=('Arial', 27, 'bold'))
 
+            
+            
+
+        
 
         
 
@@ -84,7 +108,6 @@ def enter():
         emp.shape(employeeimg1)
     emp.st()
     mntrlMAIN.goto(-350, -50)
-    
 
 refresh_bg()
 wn.onclick(click, btn=1)
