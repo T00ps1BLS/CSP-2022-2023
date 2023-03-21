@@ -10,7 +10,7 @@ employeeimg = 'EMPLOYEE.gif'
 employeeimg1 = 'EMPLOYEE1.gif'
 spchbbl = 'speechbubble.gif'
 menu_items1= ['Taco', 'Taco', 'taco', 'tacos', 'Tacos', 'Taco with Cheese',]
-menu_prices1= [0.25, 0.50, 0.50, 1.00, 0.25, 1.25]
+menu_prices1= ['0.25', '0.50', '0.50', '1.00', '0.25', '1.25']
 bgstate = 0
 select = False
 mnit0 = fred.Turtle()
@@ -25,10 +25,13 @@ mnit4 = fred.Turtle()
 mnit4.ht()
 mnit5 = fred.Turtle()
 mnit5.ht()
+spawn_count = 0
+menu_clicked = False
 
 wn = fred.Screen()
 wn.setup(width=screen_w, height=screen_h)
 wn.addshape(employeeimg)
+wn.addshape(employeeimg1)
 wn.addshape(spchbbl)
 emp = fred.Turtle()
 emp.ht()
@@ -67,27 +70,49 @@ def click(x, y):
         print(bgstate)
         refresh_bg()
 
-def menu_turtles():
-    global menu_items1, menu_prices1
+def menu_turtles(trtl):
+    global menu_items1, menu_prices1, spawn_count
+    random_taco_num = random.randint(0, 5)
+    turtleitem = ""
+    turtleprice = ""
     for i in menu_items1:
-        random_taco_num = random.randint(0, 5)
         index = 0
-        turtleitem = ""
-        turtleprice = ""
-        while index != random_taco_num:
-            turtleitem += menu_items1[index]
-            turtleprice += menu_prices1[index]
-            index += 1
-        mnit0.write('''
-        {}
-        {}
-        '''.format(turtleitem, turtleprice), align='center', font=('Arial', 27, 'bold'))
-
-            
-            
-
         
+        while index != random_taco_num:
+            index += 1
+        if index == random_taco_num:
+            turtleitem = menu_items1[index]
+            turtleprice = menu_prices1[index]
+    trtl.penup()
+    if spawn_count < 3:
+        trtl.goto(-50, (200 - (80 * spawn_count)))
+        trtl.write('''
+        {}\n${}
+        '''.format(turtleitem, turtleprice), align='Right', font=('Arial', 27, 'bold'))
+    else:
+        trtl.goto(250, (200 - (80 * (spawn_count - 3))))
+        trtl.write('''
+        {}\n${}
+        '''.format(turtleitem, turtleprice), align='Right', font=('Arial', 27, 'bold'))
+    spawn_count += 1
+    
 
+def open_menu(x, y):
+    global menu_clicked
+    if menu_clicked == False:
+        menu_turtles(mnit0)
+        menu_turtles(mnit1)
+        menu_turtles(mnit2)
+        menu_turtles(mnit3)
+        menu_turtles(mnit4)
+        menu_turtles(mnit5)
+    else:
+        mnit0.clear()
+        mnit1.clear()
+        mnit2.clear()
+        mnit3.clear()
+        mnit4.clear()
+        mnit5.clear()
         
 
 def enter():
@@ -108,9 +133,11 @@ def enter():
         emp.shape(employeeimg1)
     emp.st()
     mntrlMAIN.goto(-350, -50)
+    mntrlMAIN.st()
 
 refresh_bg()
 wn.onclick(click, btn=1)
+mntrlMAIN.onclick(open_menu, btn=1)
 wn.onkeypress(enter, 'space')
 wn.listen()
 wn.mainloop()
