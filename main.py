@@ -9,9 +9,19 @@ backgroundimg3 = 'ORDER-SCREEN.png'
 employeeimg = 'EMPLOYEE.gif'
 employeeimg1 = 'EMPLOYEE1.gif'
 spchbbl = 'speechbubble.gif'
-menu_items1= ['Taco', 'Taco', 'taco', 'tacos', 'Tacos', 'Taco with Cheese',]
-menu_prices1= ['0.25', '0.50', '0.50', '1.00', '0.25', '1.25']
+menu_background = 'menubackground.gif'
+menu_items1 = ['Taco', 'Taco', 'taco', 'tacos', 'Tacos', '''
+Taco w/ Cheese
+''',]
+menu_items2 = []
+menu_prices1 = ['0.25', '0.50', '0.50', '1.00', '0.25', '1.25']
+menu_prices2 = []
+overall_cost1 = 0
+overall_cost2 = 0
+quality_points1 = 0
+quality_points2 = 0
 bgstate = 0
+text_prompt = 0
 select = False
 mnit0 = fred.Turtle()
 mnit0.ht()
@@ -33,6 +43,7 @@ wn.setup(width=screen_w, height=screen_h)
 wn.addshape(employeeimg)
 wn.addshape(employeeimg1)
 wn.addshape(spchbbl)
+wn.addshape(menu_background)
 emp = fred.Turtle()
 emp.ht()
 emp.pu()
@@ -44,10 +55,14 @@ spb.pu()
 spb.speed(0)
 spb.goto(0, -323)
 mntrlMAIN = fred.Turtle()
-mntrlMAIN.ht()
 mntrlMAIN.pu()
 mntrlMAIN.speed(0)
 mntrlMAIN.turtlesize(10)
+mntrlMAIN.hideturtle()
+drw = fred.Turtle()
+drw.ht()
+drw.pu()
+drw.pencolor('black')
 
 
 def refresh_bg():
@@ -70,8 +85,12 @@ def click(x, y):
         print(bgstate)
         refresh_bg()
 
+def add_points(x, y):
+    global overall_cost1, overall_cost2, quality_points1, quality_points2, text_prompt
+    
+
 def menu_turtles(trtl):
-    global menu_items1, menu_prices1, spawn_count
+    global menu_items1, menu_prices1, spawn_count, text_prompt
     random_taco_num = random.randint(0, 5)
     turtleitem = ""
     turtleprice = ""
@@ -81,25 +100,45 @@ def menu_turtles(trtl):
         while index != random_taco_num:
             index += 1
         if index == random_taco_num:
-            turtleitem = menu_items1[index]
-            turtleprice = menu_prices1[index]
+            if text_prompt == 0:
+                turtleitem = menu_items1[index]
+                turtleprice = menu_prices1[index]
+            elif text_prompt == 1:
+                turtleitem = menu_items2[index]
+                turtleprice = menu_prices2[index]
     trtl.penup()
     if spawn_count < 3:
-        trtl.goto(-50, (200 - (80 * spawn_count)))
+        trtl.speed(0)
+        trtl.goto(-350, (200 - (80 * spawn_count)))
         trtl.write('''
-        {}\n${}
-        '''.format(turtleitem, turtleprice), align='Right', font=('Arial', 27, 'bold'))
+        {} ${}
+        '''.format(turtleitem, turtleprice), font=('Arial', 27, 'bold'))
     else:
-        trtl.goto(250, (200 - (80 * (spawn_count - 3))))
+        trtl.goto(50, (200 - (80 * (spawn_count - 3))))
         trtl.write('''
-        {}\n${}
-        '''.format(turtleitem, turtleprice), align='Right', font=('Arial', 27, 'bold'))
+        {} ${}
+        '''.format(turtleitem, turtleprice), font=('Arial', 27, 'bold'))
     spawn_count += 1
     
 
 def open_menu(x, y):
     global menu_clicked
     if menu_clicked == False:
+        mntrlMAIN.goto(0, 200)
+        mntrlMAIN.hideturtle()
+        drw.speed(0)
+        drw.goto(400, 400)
+        drw.pensize(10)
+        drw.pd()
+        drw.fillcolor('#bc8e52')
+        drw.begin_fill()
+        drw.goto(-400, 400)
+        drw.goto(-400, -40)
+        drw.goto(400, -40)
+        drw.goto(400, 400)
+        drw.pu()
+        drw.goto(0, 0)
+        drw.end_fill()
         menu_turtles(mnit0)
         menu_turtles(mnit1)
         menu_turtles(mnit2)
@@ -116,7 +155,7 @@ def open_menu(x, y):
         
 
 def enter():
-    global select, bgstate
+    global select, bgstate, text_prompt
     select = True
     if bgstate == 0:
         wn.bgcolor('purple')
@@ -138,6 +177,12 @@ def enter():
 refresh_bg()
 wn.onclick(click, btn=1)
 mntrlMAIN.onclick(open_menu, btn=1)
+mnit0.onclick(add_points, btn=1)
+mnit1.onclick(add_points, btn=1)
+mnit2.onclick(add_points, btn=1)
+mnit3.onclick(add_points, btn=1)
+mnit4.onclick(add_points, btn=1)
+mnit5.onclick(add_points, btn=1)
 wn.onkeypress(enter, 'space')
 wn.listen()
 wn.mainloop()
