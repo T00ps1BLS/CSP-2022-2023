@@ -1,5 +1,5 @@
 import turtle as fred # Imported turtle from https://pythonturtle.org/
-import random # Imported random
+import random # Imported random from https://github.com/python/cpython/blob/3.11/Lib/random.py
 
 screen_w = 1280
 screen_h = 720
@@ -10,9 +10,7 @@ employeeimg = 'EMPLOYEE.gif'
 employeeimg1 = 'EMPLOYEE1.gif'
 spchbbl = 'speechbubble.gif'
 menu_background = 'menubackground.gif'
-menu_items1 = ['Taco', 'Taco', 'taco', 'tacos', 'Tacos', '''
-Taco w/ Cheese
-''',]
+menu_items1 = ['Taco', 'Taco', 'taco', 'tacos', 'Tacos', 'Taco w/ Cheese',]
 menu_items2 = []
 menu_prices1 = ['0.25', '0.50', '0.50', '1.00', '0.25', '1.25']
 menu_prices2 = []
@@ -87,7 +85,7 @@ def click(x, y):
 
 def add_points(x, y):
     global overall_cost1, overall_cost2, quality_points1, quality_points2, text_prompt
-    
+
 
 def menu_turtles(trtl):
     global menu_items1, menu_prices1, spawn_count, text_prompt
@@ -109,15 +107,25 @@ def menu_turtles(trtl):
     trtl.penup()
     if spawn_count < 3:
         trtl.speed(0)
-        trtl.goto(-350, (200 - (80 * spawn_count)))
-        trtl.write('''
-        {} ${}
-        '''.format(turtleitem, turtleprice), font=('Arial', 27, 'bold'))
+        trtl.goto(-450, (200 - (80 * spawn_count)))
+        if turtleitem == 'Taco w/ Cheese':
+            trtl.write('''
+            {} ${}
+            '''.format(turtleitem, turtleprice), align='left', font=('Arial', 27, 'bold'))
+        else:
+            trtl.write('''
+            {} ${}
+            '''.format(turtleitem, turtleprice), font=('Arial', 27, 'bold'))
     else:
         trtl.goto(50, (200 - (80 * (spawn_count - 3))))
-        trtl.write('''
-        {} ${}
-        '''.format(turtleitem, turtleprice), font=('Arial', 27, 'bold'))
+        if turtleitem == 'Taco w/ Cheese':
+            trtl.write('''
+            {} ${}
+            '''.format(turtleitem, turtleprice), align='center', font=('Arial', 27, 'bold'))
+        else:
+            trtl.write('''
+            {} ${}
+            '''.format(turtleitem, turtleprice), font=('Arial', 27, 'bold'))
     spawn_count += 1
     
 
