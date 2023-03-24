@@ -10,6 +10,7 @@ employeeimg = 'EMPLOYEE.gif'
 employeeimg1 = 'EMPLOYEE1.gif'
 spchbbl = 'speechbubble.gif'
 menu_background = 'menubackground.gif'
+item_atr_file = 'itematr.txt'
 menu_items1 = ['Taco', 'Taco', 'taco', 'tacos', 'Tacos', 'Taco w/ Cheese',]
 menu_items2 = []
 menu_prices1 = ['0.25', '0.50', '0.50', '1.00', '0.25', '1.25']
@@ -18,6 +19,7 @@ overall_cost1 = 0
 overall_cost2 = 0
 quality_points1 = 0
 quality_points2 = 0
+item_clicked = 0
 bgstate = 0
 text_prompt = 0
 select = False
@@ -63,6 +65,10 @@ drw.pu()
 drw.pencolor('black')
 
 
+
+
+
+
 def refresh_bg():
     global bgstate 
     if bgstate == 0:
@@ -71,6 +77,9 @@ def refresh_bg():
         wn.bgpic(backgroundimg2)
     elif bgstate == 3:
         wn.bgpic(backgroundimg3)
+
+
+
 
 def click(x, y):
     global bgstate, select
@@ -83,8 +92,28 @@ def click(x, y):
         print(bgstate)
         refresh_bg()
 
-def add_points(x, y):
+
+
+
+def add_points(num, x, y):
     global overall_cost1, overall_cost2, quality_points1, quality_points2, text_prompt
+    if text_prompt == 0:
+        item_prices = open(item_atr_file, 'r')
+        line_num = num
+        for line in item_prices:
+            index = 0
+            while line[index] != line_num:
+                if line[index] == '\n':
+                    break
+                index += 1
+            index += 2
+            overall_cost1 += line[index]
+            print(overall_cost1)
+    elif text_prompt == 1:
+        #
+        print("null")
+
+
 
 
 def menu_turtles(trtl):
@@ -104,7 +133,11 @@ def menu_turtles(trtl):
             elif text_prompt == 1:
                 turtleitem = menu_items2[index]
                 turtleprice = menu_prices2[index]
+
+
     trtl.penup()
+
+
     if spawn_count < 3:
         trtl.speed(0)
         trtl.goto(-450, (200 - (80 * spawn_count)))
@@ -126,12 +159,18 @@ def menu_turtles(trtl):
             trtl.write('''
             {} ${}
             '''.format(turtleitem, turtleprice), font=('Arial', 27, 'bold'))
+
     spawn_count += 1
+    return turtleitem, turtleprice
     
+
+
 
 def open_menu(x, y):
     global menu_clicked
     if menu_clicked == False:
+        global item_atr_file
+
         mntrlMAIN.goto(0, 200)
         mntrlMAIN.hideturtle()
         drw.speed(0)
@@ -147,12 +186,24 @@ def open_menu(x, y):
         drw.pu()
         drw.goto(0, 0)
         drw.end_fill()
-        menu_turtles(mnit0)
-        menu_turtles(mnit1)
-        menu_turtles(mnit2)
-        menu_turtles(mnit3)
-        menu_turtles(mnit4)
-        menu_turtles(mnit5)
+
+
+        itematr0 = menu_turtles(mnit0)
+        itematr1 = menu_turtles(mnit1)
+        itematr2 = menu_turtles(mnit2)
+        itematr3 = menu_turtles(mnit3)
+        itematr4 = menu_turtles(mnit4)
+        itematr5 = menu_turtles(mnit5)
+
+
+        with open(item_atr_file, 'a') as file:
+            file.write('0,{}\n'.format(itematr0))
+            file.write('1,{}\n'.format(itematr1))
+            file.write('2,{}\n'.format(itematr2))
+            file.write('3,{}\n'.format(itematr3))
+            file.write('4,{}\n'.format(itematr4))
+            file.write('5,{}\n'.format(itematr5))
+
     else:
         mnit0.clear()
         mnit1.clear()
@@ -185,12 +236,14 @@ def enter():
 refresh_bg()
 wn.onclick(click, btn=1)
 mntrlMAIN.onclick(open_menu, btn=1)
-mnit0.onclick(add_points, btn=1)
-mnit1.onclick(add_points, btn=1)
-mnit2.onclick(add_points, btn=1)
-mnit3.onclick(add_points, btn=1)
-mnit4.onclick(add_points, btn=1)
-mnit5.onclick(add_points, btn=1)
+
+mnit0.onclick(add_points(num=0, x=0, y=0), btn=1)
+mnit1.onclick(add_points(num=1 x=0, y=0), btn=1)
+mnit2.onclick(add_points(num=2, x=0, y=0), btn=1)
+mnit3.onclick(add_points(num=3, x=0, y=0), btn=1)
+mnit4.onclick(add_points(num=4, x=0, y=0), btn=1)
+mnit5.onclick(add_points(num=5, x=0, y=0), btn=1)
+
 wn.onkeypress(enter, 'space')
 wn.listen()
 wn.mainloop()
