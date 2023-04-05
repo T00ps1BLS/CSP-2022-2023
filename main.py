@@ -36,7 +36,7 @@ mnit4.ht()
 mnit5 = fred.Turtle()
 mnit5.ht()
 spawn_count = 0
-menu_clicked = False
+menu_clicked1 = False
 
 wn = fred.Screen()
 wn.setup(width=screen_w, height=screen_h)
@@ -95,23 +95,8 @@ def click(x, y):
 
 
 
-def add_points(num, x, y):
-    global overall_cost1, overall_cost2, quality_points1, quality_points2, text_prompt
-    if text_prompt == 0:
-        item_prices = open(item_atr_file, 'r')
-        line_num = num
-        for line in item_prices:
-            index = 0
-            while line[index] != line_num:
-                if line[index] == '\n':
-                    break
-                index += 1
-            index += 2
-            overall_cost1 += line[index]
-            print(overall_cost1)
-    elif text_prompt == 1:
-        #
-        print("null")
+def add_points(x, y):
+    print("null")
 
 
 
@@ -163,12 +148,28 @@ def menu_turtles(trtl):
     spawn_count += 1
     return turtleitem, turtleprice
     
+def press1():
+    mntrlMAIN.write("1")
 
+def press2():
+    mntrlMAIN.write("2")
+
+def press3():
+    mntrlMAIN.write("3")
+
+def press4():
+    mntrlMAIN.write("4")
+
+def press5():
+    mntrlMAIN.write("5")
+
+def press6():
+    mntrlMAIN.write("6")
 
 
 def open_menu(x, y):
-    global menu_clicked
-    if menu_clicked == False:
+    global menu_clicked1
+    if menu_clicked1 == False:
         global item_atr_file
 
         mntrlMAIN.goto(0, 200)
@@ -187,7 +188,6 @@ def open_menu(x, y):
         drw.goto(0, 0)
         drw.end_fill()
 
-
         itematr0 = menu_turtles(mnit0)
         itematr1 = menu_turtles(mnit1)
         itematr2 = menu_turtles(mnit2)
@@ -195,14 +195,12 @@ def open_menu(x, y):
         itematr4 = menu_turtles(mnit4)
         itematr5 = menu_turtles(mnit5)
 
-
-        with open(item_atr_file, 'a') as file:
-            file.write('0,{}\n'.format(itematr0))
-            file.write('1,{}\n'.format(itematr1))
-            file.write('2,{}\n'.format(itematr2))
-            file.write('3,{}\n'.format(itematr3))
-            file.write('4,{}\n'.format(itematr4))
-            file.write('5,{}\n'.format(itematr5))
+        wn.onkeypress(press1, '1')
+        wn.onkeypress(press2, '2')
+        wn.onkeypress(press3, '3')
+        wn.onkeypress(press4, '4')
+        wn.onkeypress(press5, '5')
+        wn.onkeypress(press6, '6')
 
     else:
         mnit0.clear()
@@ -236,13 +234,6 @@ def enter():
 refresh_bg()
 wn.onclick(click, btn=1)
 mntrlMAIN.onclick(open_menu, btn=1)
-
-mnit0.onclick(add_points(num=0, x=0, y=0), btn=1)
-mnit1.onclick(add_points(num=1 x=0, y=0), btn=1)
-mnit2.onclick(add_points(num=2, x=0, y=0), btn=1)
-mnit3.onclick(add_points(num=3, x=0, y=0), btn=1)
-mnit4.onclick(add_points(num=4, x=0, y=0), btn=1)
-mnit5.onclick(add_points(num=5, x=0, y=0), btn=1)
 
 wn.onkeypress(enter, 'space')
 wn.listen()
