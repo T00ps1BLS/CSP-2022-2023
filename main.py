@@ -149,22 +149,34 @@ def menu_turtles(trtl):
     return turtleitem, turtleprice
     
 def press1():
-    mntrlMAIN.write("1")
+    mntrlMAIN.clear()
+    mntrlMAIN.write("1", font=('Arial', 20, 'bold'))
+    keypress = 1
 
 def press2():
-    mntrlMAIN.write("2")
+    mntrlMAIN.clear()
+    mntrlMAIN.write("2", font=('Arial', 20, 'bold'))
+    keypress = 2
 
 def press3():
-    mntrlMAIN.write("3")
+    mntrlMAIN.clear()
+    mntrlMAIN.write("3", font=('Arial', 20, 'bold'))
+    keypress = 3
 
 def press4():
-    mntrlMAIN.write("4")
+    mntrlMAIN.clear()
+    mntrlMAIN.write("4", font=('Arial', 20, 'bold'))
+    keypress = 4
 
 def press5():
-    mntrlMAIN.write("5")
+    mntrlMAIN.clear()
+    mntrlMAIN.write("5", font=('Arial', 20, 'bold'))
+    keypress = 5
 
 def press6():
-    mntrlMAIN.write("6")
+    mntrlMAIN.clear()
+    mntrlMAIN.write("6", font=('Arial', 20, 'bold'))
+    keypress = 6
 
 
 def open_menu(x, y):
@@ -172,7 +184,7 @@ def open_menu(x, y):
     if menu_clicked1 == False:
         global item_atr_file
 
-        mntrlMAIN.goto(0, 200)
+        mntrlMAIN.goto(0, -250)
         mntrlMAIN.hideturtle()
         drw.speed(0)
         drw.goto(400, 400)
@@ -236,5 +248,6 @@ wn.onclick(click, btn=1)
 mntrlMAIN.onclick(open_menu, btn=1)
 
 wn.onkeypress(enter, 'space')
+
 wn.listen()
 wn.mainloop()
